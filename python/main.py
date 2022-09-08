@@ -6,11 +6,13 @@
 
 print('Paul McCartney')
 print('Paul McCartney', 'was born in', 1942)
+#%%
 # print('Paul McCartney', 'was born in', 1942 + '.')
 print('Paul McCartney', 'was born in', str(1942) + '.')
 print('Paul McCartney wrote \'Yesterday\' in \n' + str(1965))
 
 
+#%%
 # # The input() built-in function
 
 # print('Paul McCartney was born in: ')
