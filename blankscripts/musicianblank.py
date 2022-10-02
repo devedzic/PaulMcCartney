@@ -12,12 +12,12 @@ class Musician:
     It is assumed that a musician is sufficiently described by their
     name and whether they are a solo musician or a member of a band.
 
-    This class illustrates some of the important concepts of Python classes:
+    This class illustrates some important concepts of Python classes:
     - self
     - __init__()
     - __str__()
     - __eq__(self, other) is the equivalent of Java equals() and should be overridden in classes
-    - __dict__ attribute of all objects ()
+    - __dict__ attribute of all objects
     - data fields (instance variables)
     - methods - calling them by self.<method>(...) from the same class where they are defined
     """
@@ -25,11 +25,8 @@ class Musician:
     def __init__(self, name, is_band_member=True):
         pass
         # self.__n = 'lll'                                    # 'private' field
-
-    # Properties: 'private' fields; run setters and getters in the debugger.
-    # Make name a property (after setting up __init__(), __str__(), __eq__(), methods,...).
-
-    # Add an immutable property (no setter for it)
+        # self._m = 'mmm'                                     # 'protected' field
+        # self.__immutable_property = 'I am immutable'
 
     def __str__(self):
         pass
@@ -37,10 +34,36 @@ class Musician:
     def __eq__(self, other):
         pass
 
+    # Properties: 'private' fields/attributes:
+    #   @property
+    #   def <attr>(self):
+    #       """ The docstring for <attr> must go here."""
+    #       return self.__<attr>
+    #   @<attr>.setter
+    #   def <attr>(self, <attr>):
+    #       self.__<attr> = <attr> if ... else ...
+    #   @<attr>.deleter
+    #   def <attr>(self, <attr>):
+    #       del self.__<attr>
+
+    # Properties allow programmers to create methods that behave like attributes.
+    # With properties, one can change how they compute the target attribute whenever they need to do so.
+    # A more detailed explanation: https://realpython.com/python-property/.
+    # In general, avoid turning attributes that don’t require extra processing into properties.
+    # Using properties in those situations can make the code unnecessarily verbose, confusing and slower
+    # than code based on regular attributes.
+
+    # Make name a property (after setting up __init__(), __str__(), __eq__(), methods,...)
+
+    # Run setters and getters in the debugger
+
+    # Add an immutable property (no setter for it)
+
     def play(self, song_title, *args, **kwargs):
         """Assumes that song_title, *args (expressions of gratitude) and kwargs.values() (messages) are strings.
         Prints song_title, rhythm counts, expressions of gratitude and messages. A call example:
             <musician>.play(song_title, *['Thank you!', 'You're wonderful!], love='We love you!')
+        Convention: if rhythm count is provided, it is passed as rhythm_count='...' and is the first kwarg.
         """
 
         pass
@@ -97,8 +120,9 @@ class Singer(Musician):
 
     def play(self, song_title, *args, **kwargs):
         """Overrides the play() method from superclass.
-        Assumes that song_title, *args (expressions of gratitude) and kwargs.values() (messages) are strings.
-        Prints song_title, expressions of gratitude and messages. A call example:
+        In addition to printing song_title, expressions of gratitude and messages,
+        it also prints an additional message in the end.
+        A call example:
             <singer>.play(song_title, *['Thank you!', 'You're wonderful!], love='We love you!')
         """
 
@@ -135,10 +159,14 @@ if __name__ == "__main__":
     # Print objects
     print()
 
+    # Run setters and getters in the debugger
+
     # Compare objects
     print()
 
-    # Access data fields (instance variables), including 'private' fields
+    # Access data fields/attributes (instance variables),
+    # including 'private' ones (<object>._Musician__n), 'protected' ones (<object>._Musician__m) and
+    # immutable ones (<object>.immutable_property)
     print()
 
     # Add new data fields (instance variables)
@@ -158,6 +186,14 @@ if __name__ == "__main__":
     # - o.__dir__()
     # - o.__dir__
     # - o.__dict__
+    #
+    # print(True + 1)
+    # print(True.__int__())
+    # print((1).__class__)
+    # print((1).__class__.__name__)
+    # print((1).__dir__())
+    # print(object.__dict__)
+    # print()
 
     # Demonstrate object data fields and methods for Musician objects
     print()
@@ -171,6 +207,13 @@ if __name__ == "__main__":
     #   object class defines object.__eq__(self, other) etc.
     #   object.__ne__(self, other), the inverse of object.__eq__(self, other),
     #   is provided by Python automatically once object.__eq__(self, other) is implemented
+
+    # Version 1 - no multiple inheritance
+    print()
+
+    # Version 2 - with multiple inheritance
+    print()
+
     print()
 
     # Demonstrate method overriding
@@ -178,7 +221,6 @@ if __name__ == "__main__":
 
     # Demonstrate multiple inheritance and MRO.
     # Make sure to read this first: https://stackoverflow.com/a/50465583/1899061 (especially Scenario 3).
-    print()
 
     # Demonstrate JSON encoding/decoding of simple data types.
     # Refer to https://docs.python.org/3.3/library/json.html#encoders-and-decoders for details.

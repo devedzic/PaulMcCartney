@@ -11,22 +11,12 @@ import json
 
 class Band():
     """The class describing the concept of a music group/band.
-    It includes a list of Musician objects (band members) and the date when the band started performing together.
+    It includes a list of Musician objects (band members)
+    and the dates when the band started/stopped performing together.
     """
 
     # Class variables: like static fields in Java; typically defined and initialized before __init__()
-    # Insert a class variable (static field), such as definition, date_pattern,...
-
-    # formed_phrase_approx = 'the band was formed in '
-    # formed_phrase_date = 'the band was formed on '
-    # formed_phrase_approx_still_together = 'the band has been formed in '
-    # formed_phrase_date_still_together = 'the band has been formed on '
-    # formed_phrase_unknown = 'It is unknown when the band has been formed.'
-    # split_phrase_approx = 'the band split up in '
-    # split_phrase_date = 'the band split up on '
-    # split_phrase_negative = 'the band is still together.'
-    # split_phrase_unknown = 'It is unknown if he band is still together.'
-    # expected_keywords = ['formed', 'split']
+    # Insert a class variable (static field), such as genres, date_pattern,...
 
     def __init__(self, name, *members, start=date.today(), end=date.today()):
         pass                                            # introduce and initialize iterator counter, self.__i
@@ -35,21 +25,15 @@ class Band():
         pass
 
     def __eq__(self, other):
+        # Musician objects are unhashable, so comparing the members tuples from self and other directly does not work;
+        # see https://stackoverflow.com/a/14721133/1899061, https://stackoverflow.com/a/17236824/1899061
+        # return self == other if isinstance(other, Band) else False    # No! Musician objects are unhashable!
+
         pass
 
     def parse_band_str(self, band_str):
         """Splits a band string in its typical segments.
         """
-        pass
-
-    # Alternative constructor 1
-    @classmethod
-    def from_band_str_year(cls, band_str):
-        pass
-
-    # Alternative constructor 2
-    @classmethod
-    def from_band_str_date(cls, band_str):
         pass
 
     @staticmethod
@@ -66,7 +50,7 @@ class Band():
         and then call the next() built-in function on that object.
         It is often sufficient to just return self in __iter__(),
         if the iterator counter such as self.__i is introduced and initialized in __init__().
-        Alternatively, the iterator counter (self.__i) is introduced and initialized  here.
+        Alternatively, the iterator counter (self.__i) is introduced and initialized here.
         """
 
         pass
@@ -82,6 +66,8 @@ def next_member(band):
     A great tutorial on generators: https://realpython.com/introduction-to-python-generators/.
     """
 
+    pass
+
 
 class BandEncoder(json.JSONEncoder):
     """JSON encoder for Band objects (cls= parameter in json.dumps()).
@@ -93,7 +79,7 @@ class BandEncoder(json.JSONEncoder):
         pass
 
 
-def musician_py_to_json(band):
+def band_py_to_json(band):
     """JSON encoder for Band objects (default= parameter in json.dumps()).
     """
 
@@ -107,12 +93,8 @@ if __name__ == "__main__":
 
     # from testdata.musicians import *
 
-    # class variables (like static fields in Java; typically defined and initialized before __init__())
-    # object class (like the Object class in Java; all classes inherit from object
-    #   try, e.g., list.__mro__ in the console)
-    #   object class defines object.__eq__(self, other) etc.
-    #   object.__ne__(self, other), the inverse of object.__eq__(self, other),
-    #   is provided by Python automatically once object.__eq__(self, other) is implemented
+    # Check class variables (like static fields in Java; typically defined and initialized before __init__())
+    print()
 
     # Check the basic methods (__init__(), __str__(),...)
     print()
