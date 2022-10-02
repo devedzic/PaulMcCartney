@@ -155,7 +155,13 @@ class Singer(Musician):
         return super().__str__() + f'\n{str(self.vocals.name).lower().replace("_", " ")}'
 
     def __eq__(self, other):
-        return isinstance(other, Singer) and (super().__eq__(other)) and (self.vocals == other.vocals)
+        # Recommended if inheritance is involved
+        # (https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes):
+        # if type(other) is type(self):
+        #     return self.__dict__ == other.__dict__
+        # return False
+
+        return self.__dict__ == other.__dict__ if type(self) is type(other) else False
 
     def play(self, song_title, *args, **kwargs):
         """Overrides the play() method from superclass.
@@ -189,7 +195,13 @@ class Songwriter(Musician):
         return super().__str__() + f'\n{str(self.instrument.name).lower().replace("_", " ")}'
 
     def __eq__(self, other):
-        return isinstance(other, Songwriter) and super().__eq__(other) and (self.instrument == other.instrument)
+        # Recommended if inheritance is involved
+        # (https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes):
+        # if type(other) is type(self):
+        #     return self.__dict__ == other.__dict__
+        # return False
+
+        return self.__dict__ == other.__dict__ if type(self) is type(other) else False
 
     def what_do_you_do(self):
         """Just a simple method to describe the concept of songwriter.
@@ -209,6 +221,18 @@ class SingerSongwriter(Singer, Songwriter):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def __str__(self):
+        return super().__str__()
+
+    def __eq__(self, other):
+        # Recommended if inheritance is involved
+        # (https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes):
+        # if type(other) is type(self):
+        #     return self.__dict__ == other.__dict__
+        # return False
+
+        return self.__dict__ == other.__dict__ if type(self) is type(other) else False
 
 
 if __name__ == "__main__":
@@ -303,13 +327,13 @@ if __name__ == "__main__":
     # print()
 
     # Version 2 - with multiple inheritance
-    paul = Singer(name = 'Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True)
+    paul = Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True)
     print(paul)
-    print(paul == Singer(name = 'Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True))
+    print(paul == Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True))
     print()
-    john = Songwriter(name = 'John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True)
+    john = Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True)
     print(john)
-    print(john == Songwriter(name = 'John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True))
+    print(john == Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True))
     print()
 
     # Demonstrate method overriding
