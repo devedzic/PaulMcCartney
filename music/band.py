@@ -1,12 +1,13 @@
 """The class representing the concept of a music group/band.
 It includes a list of Musician objects (band members) and the date when the band started performing together.
 """
-
+import pickle
 from datetime import date, datetime, time
 import json
+import sys
 
 from music.musician import Musician
-from util.utility import format_date
+from util.utility import format_date, get_project_dir, get_data_dir
 
 
 class Band():
@@ -22,6 +23,12 @@ class Band():
 
     def __init__(self, name, *members, start=date.today(), end=date.today()):
         # pass                                            # introduce and initialize iterator counter, self.__i
+
+        # Code to check if the band name is specified correctly (possibly rises BandNameError)
+        check_name = not isinstance(name, str) or len(name) == 0
+        if check_name:
+            raise BandNameError(name)
+
         self.name = name
         self.members = members
         self.start = start
@@ -115,6 +122,22 @@ def band_json_to_py(band_json):
     """
 
 
+class BandError(Exception):
+    """Base class for exceptions in this module.
+    """
+
+    pass
+
+
+class BandNameError(BandError):
+    """Exception raised when the name of a band is specified incorrectly.
+    """
+
+    def __init__(self, name):
+        self.name = name
+        self.message = f'BandNameError: \'{self.name}\' is not a valid band name'
+
+
 if __name__ == "__main__":
 
     from testdata.musicians import *
@@ -183,14 +206,147 @@ if __name__ == "__main__":
     print(next(ge))     # 1
     print(next(ge))     # 4
     print(next(ge))     # 9
-    print(next(ge))     # raises StopIteration
+    # print(next(ge))     # raises StopIteration
     print()
 
     # Demonstrate JSON encoding/decoding of Band objects
+
+    # Using the json_tricks module from the json-tricks external package (https://github.com/mverleg/pyjson_tricks).
+    # From the package documentation:
+    # The JSON string resulting from applying the json_tricks.dumps() function stores the module and class name.
+    # The class must be importable from the same module when decoding (and should not have changed).
+    # If it isn't, you have to manually provide a dictionary to cls_lookup_map when loading
+    # in which the class name can be looked up. Note that if the class is imported, then globals() is such a dictionary
+    # (so try loads(json, cls_lookup_map=glboals())).
+    # Also note that if the class is defined in the 'top' script (that you're calling directly),
+    # then this isn't a module and the import part cannot be extracted. Only the class name will be stored;
+    # it can then only be deserialized in the same script, or if you provide cls_lookup_map.
+    # That's why the following warning appears when serializing Band objects in this script:
+    # UserWarning: class <class '__main__.Band'> seems to have been defined in the main file;
+    # unfortunately this means that it's module/import path is unknown,
+    # so you might have to provide cls_lookup_map when decoding.
+
     # Single object
+    from json_tricks import loads, dumps
+    theBeatles_json = dumps(theBeatles, indent=4)
+    print(theBeatles_json)
+    print(theBeatles == loads(theBeatles_json))
     print()
 
     # List of objects
+    theBeatles = Band('The Beatles', *[johnLennon, paulMcCartney, georgeHarrison, ringoStarr],
+                      start=date(1957, 7, 6), end=date(1970, 4, 10))
+    theRollingStones = Band('The Rolling Stones', *[mickJagger, keithRichards, ronWood, charlieWatts],
+                            start=date(1962, 7, 12))
+    pinkFloyd = Band('Pink Floyd', *[sydBarrett, davidGilmour, rogerWaters, nickMason, rickWright])
+
+    bands_json = dumps([theBeatles, theRollingStones, pinkFloyd], indent=4)
+    print(bands_json)
+    print([theBeatles, theRollingStones, pinkFloyd] == loads(bands_json))
+
     print()
+
+    # Demonstrate exceptions
+
+    # Catching exceptions - try-except block
+    # try:
+    #     for i in range(5):
+    #         print(theBeatles.members[i])
+    # except Exception as err:
+    #     print()
+    #     # print(err)
+    #     # sys.stderr.write('\n' + str(type(err)) + ': ' + err.args[0] + '\n')
+    #     sys.stderr.write(f'\n{type(err).__name__}: {err.args[0]}\n\n')
+    # print()
+
+    # Catching multiple exceptions and the 'finally' clause
+    # try:
+    #     for i in range(4):
+    #         print(theBeatles.members[i])
+    #     print(theBeatles / 4)
+    # except IndexError as err:
+    #     print()
+    #     sys.stderr.write(f'\n{type(err).__name__}: {err.args[0]}\n\n')
+    # except Exception as err:
+    #     print()
+    #     sys.stderr.write(f'\nCaught an exception: {type(err).__name__}: {err.args[0]}\n\n')
+    # finally:
+    #     print('Caught an exception. Stopped any further processing.')
+    # print()
+
+    # Using the 'else' clause (must be after all 'except' clauses)
+    # try:
+    #     for i in range(4):
+    #         print(theBeatles.members[i])
+    # except IndexError as err:
+    #     print()
+    #     sys.stderr.write(f'\n{type(err).__name__}: {err.args[0]}\n\n')
+    # else:
+    #     print(f'\nThat\'s all.')
+    # print()
+
+    # Catching 'any' exception - empty 'except' clause
+    # try:
+    #     for i in range(5):
+    #         print(theBeatles.members[i])
+    # except:
+    #     print()
+    #     sys.stderr.write(f'\nCaught an exception\n\n')
+    # print()
+
+    # Catching user-defined exceptions
+    try:
+        band = Band('')
+    except Exception as err:
+        print()
+        #     sys.stderr.write(f'\n{type(err).__name__}: {err.args[0]}\n\n')
+        # sys.stderr.write(f'\n{type(err).__name__}:\n{err.message}\n\n')
+        sys.stderr.write(f'\n{err.message}\n\n')
+    print()
+
+    # Demonstrate working with files
+
+    # # Writing to a text file - <outfile>.write(str(<obj>), <outfile>.writelines([str(<obj>)+'\n' for <obj> in <objs>])
+    # bands = [theBeatles, theRollingStones, pinkFloyd]
+    # file = get_data_dir() / 'bands.txt'
+    # with open(file, 'w') as f:
+    #     # for b in bands:
+    #     #     f.write(str(b) + '\n')
+    #     f.writelines([str(b) + '\n' for b in bands])
+    # print('Done')
+    # print()
+
+    # # Demonstrate reading from a text file - <infile>.read(), <infile>.readline()
+    # file = get_data_dir() / 'bands.txt'
+    # with open(file, 'r') as f:
+    #     # lines = f.read().rstrip()             # rstrip() removes an extra '\n' in the end
+    #     lines = ''
+    #     while True:
+    #         line = f.readline()
+    #         if line:
+    #             lines += line
+    #         else:
+    #             break
+    # print(lines.rstrip())                       # rstrip() removes an extra '\n' in the end
+    # print('Done')
+    # print()
+
+    # # Demonstrate writing to a binary file - pickle.dump(<obj>, <outfile>)
+    # bands = [theBeatles, theRollingStones, pinkFloyd]
+    # file = get_data_dir() / 'bands.binary'
+    # with open(file, 'wb') as f:
+    #     pickle.dump(bands, f)
+    # print('Done')
+    # print()
+
+    # # Demonstrate reading from a binary file - pickle.load(<infile>)
+    # file = get_data_dir() / 'bands.binary'
+    # with open(file, 'rb') as f:
+    #     bands1 = pickle.load(f)
+    # print('Done')
+    # for band in bands1:
+    #     print(band)
+    # print()
+
 
 

@@ -4,6 +4,7 @@ It includes a list of Musician objects (band members) and the date when the band
 
 from datetime import date, datetime, time
 import json
+import sys
 
 # from music.musician import Musician
 # from util.utility import format_date
@@ -20,6 +21,8 @@ class Band():
 
     def __init__(self, name, *members, start=date.today(), end=date.today()):
         pass                                            # introduce and initialize iterator counter, self.__i
+
+        # Code to check if the band name is specified correctly, before all other code (possibly rises BandNameError)
 
     def __str__(self):
         pass
@@ -89,6 +92,21 @@ def band_json_to_py(band_json):
     """
 
 
+class BandError(Exception):
+    """Base class for exceptions in this module.
+    """
+
+    pass
+
+
+class BandNameError(BandError):
+    """Exception raised when the name of a band is specified incorrectly.
+    """
+
+    def __init__(self, name):
+        pass
+
+
 if __name__ == "__main__":
 
     # from testdata.musicians import *
@@ -126,4 +144,34 @@ if __name__ == "__main__":
     # List of objects
     print()
 
+    # Demonstrate exceptions
+
+    # Catching exceptions - try-except block
+    print()
+
+    # Catching multiple exceptions and the 'finally' clause
+    print()
+
+    # Using the 'else' clause (must be after all 'except' clauses)
+    print()
+
+    # Catching 'any' exception - empty 'except' clause
+    print()
+
+    # Catching user-defined exceptions
+    print()
+
+    # Demonstrate working with files
+
+    # Writing to a text file - <outfile>.write(str(<obj>), <outfile>.writelines([str(<obj>)+'\n' for <obj> in <objs>])
+    print()
+
+    # Reading from a text file - <infile>.read(), <infile>.readline()
+    print()
+
+    # Writing to a binary file - pickle.dump(<obj>, <outfile>)
+    print()
+
+    # Reading from a binary file - pickle.load(<infile>)
+    print()
 

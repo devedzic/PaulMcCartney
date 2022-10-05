@@ -354,12 +354,39 @@ if __name__ == "__main__":
 
     # Demonstrate JSON encoding/decoding of simple data types.
     # Refer to https://docs.python.org/3.3/library/json.html#encoders-and-decoders for details.
+    d = json.dumps({'one': [1, True, 'Uno'], 'two': (2, 3, 4)}, indent=4)
+    print(d)
+    l = json.loads(d)
+    print(l)
     print()
 
     # Demonstrate JSON encoding/decoding of Musician objects
+
+    # Using the json_tricks module from the json-tricks external package (https://github.com/mverleg/pyjson_tricks).
+    # From the package documentation:
+    # The JSON string resulting from applying the json_tricks.dumps() function stores the module and class name.
+    # The class must be importable from the same module when decoding (and should not have changed).
+    # If it isn't, you have to manually provide a dictionary to cls_lookup_map when loading
+    # in which the class name can be looked up. Note that if the class is imported, then globals() is such a dictionary
+    # (so try loads(json, cls_lookup_map=glboals())).
+    # Also note that if the class is defined in the 'top' script (that you're calling directly),
+    # then this isn't a module and the import part cannot be extracted. Only the class name will be stored;
+    # it can then only be deserialized in the same script, or if you provide cls_lookup_map.
+    # That's why the following warning appears when serializing Band objects in this script:
+    # UserWarning: class <class '__main__.Musician'> seems to have been defined in the main file;
+    # unfortunately this means that it's module/import path is unknown,
+    # so you might have to provide cls_lookup_map when decoding.
+
     # Single object
+    from json_tricks import loads, dumps
+    paul_json = dumps(paul, indent=4)
+    print(paul_json)
+    print(paul == loads(paul_json))
     print()
 
     # List of objects
+    john_and_paul_json = dumps([john, paul], indent=4)
+    print(john_and_paul_json)
+    print([john, paul] == loads(john_and_paul_json))
     print()
 
