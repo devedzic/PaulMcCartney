@@ -6,8 +6,21 @@ import requests
 from bs4 import BeautifulSoup
 
 from util import utility
+from settings import *
+
 
 BASE_URL = 'https://www.imdb.com/'
+# Start from https://www.imdb.com, type anything in the Search box, and in the result find Advanced Search.
+# Click Keyword, and in Enter a keyword insert Paul McCartney. Select reference-to-paul-mccartney.
+
+# Other candidates:
+# https://ultimateclassicrock.com/search/?s=paul%20mccartney
+# https://ultimateclassicrock.com/search/?s=albums
+# https://www.rockarchive.com/artists?page=1
+# https://digitaldreamdoor.com/pages/bg_hits/bg_hits_61.html
+# https://www.paulmccartney.com/discography/albums/all
+# https://rock-bands.com/
+# https://rateyourmusic.com/charts/top/album/1960s/             # blocks IP address!
 
 
 def get_soup(url: str) -> BeautifulSoup:
@@ -17,10 +30,13 @@ def get_soup(url: str) -> BeautifulSoup:
     """
 
     # Create Response object from HTTP GET request; assume that no redirection is allowed (allow_redirects=False)
+    response = requests.get(url, allow_redirects=False)
 
     # Get text from the Response object, using <response>.text
+    response_text = response.text
 
     # Create and return the corresponding BeautifulSoup object from the response text; use features='html.parser'
+    return BeautifulSoup(response_text, features='html.parser')
 
 
 def get_specific_page(start_url: str, page=1):
@@ -97,26 +113,79 @@ def get_m_info(start_url: str, max_pages=1):
 if __name__ == "__main__":
 
     # Getting started
-    start_url = 'https://www.imdb.com/search/keyword/?keywords=rock-%27n%27-roll%2Crock-music&ref_=kw_ref_key' \
-                '&sort=moviemeter,asc&mode=detail&page=1'
+    # start_url = 'https://www.imdb.com/search/keyword/?keywords=rock-%27n%27-roll%2Crock-music&ref_=kw_ref_key' \
+    #             '&sort=moviemeter,asc&mode=detail&page=1'
+    # start_url = 'https://www.imdb.com/search/keyword/?keywords=reference-to-paul-mccartney&ref_=kw_nxt&' \
+    #             'sort=moviemeter,asc&mode=detail&page=1'
+    start_url = 'https://ultimateclassicrock.com/search/?s=paul%20mccartney'
 
-    # Create Response object from GET request, using requests.get(<url>, allow_redirects=False)
-    print()
+    # # Create Response object from GET request, using requests.get(<url>, allow_redirects=False)
+    # response = requests.get(start_url, allow_redirects=False)
+    # print(type(response))
+    # print(response)
+    # print()
 
-    # Get response text from Response object, using <response>.text
-    print()
+    # # Get response text from Response object, using <response>.text
+    # response_text = response.text
+    # print(response_text[:4000])
+    # print()
 
     # Get BeautifulSoup object from response text, using BeautifulSoup(<response text>, features='html.parser')
-    print()
+    soup = get_soup(start_url)
+    # print(type(soup))
+    # print(str(soup))
+    # print()
 
     # Save BeautifulSoup object to an HTML file,
     # using <Path-file-object>.write_text(str(<BeautifulSoup object>), encoding='utf-8', errors='replace')
+    soup_file = DATA_DIR / 'soup.html'
+    soup_file.write_text(str(soup), encoding='utf-8', errors='replace')
     print()
 
     # Demonstrate <BeautifulSoup object>.find('<tag>'), <BeautifulSoup object>.find_all(<tag>),
     # <BeautifulSoup object>.find_all(<tag>, {'<tag_attr_name>': "<tag_attr_value>"});
     # use, e.g., 'h3' or 'div' as the tags in the examples (e.g., <div class="lister-item-image ribbonize">)
+    # h3_first = soup.find('h3')
+    # print(type(h3_first))
+    # print()
+    # print(h3_first)
+
+    # h3_first = soup.find('h3', {'class': "lister-item-header"})
+    # print(type(h3_first))
+    # print()
+    # print(h3_first)
+
+    # movie_items = soup.find_all('div', {'class': "lister-item mode-detail"})
+    # print(movie_items)
+    # print()
+
+    # span_first = soup.find('article')
+    # print(span_first)
+    # print()
+    # print(type(span_first))
+    # print()
+    # a_first = soup.find('article').find('a').text
+    # print(a_first)
+    # print()
+
+    articles = soup.findAll('article')
+    print(len(articles))
     print()
+    for article in articles:
+        # image = article.findNext('a').find('figcaption').text
+        # image = article.findNext('a').text
+        # print(image)
+        div_image = article.findNext('div', {'class': 'article-image-wrapper'})
+        div_content = article.findNext('div', {'class': 'content'})
+
+        featured_image_url = div_image.findNext('a').attrs['data-image']
+        # print(featured_image_url)
+        article_title = div_content.find('a').text
+        # print(article_title)
+        article_date = div_content.findNext('div', {'class': 'auth-date'}).findNext('time')
+        print(article_date)
+
+
 
     # Demonstrate getting a 'subtag' for a tag (a bs4.element.Tag object), e.g. h3.find('<subtag>')
     print()
@@ -182,4 +251,3 @@ if __name__ == "__main__":
 	        <a ...>
 	        <span class="lister-item-year text-muted unbold">(2000)</span>
 	"""
-
