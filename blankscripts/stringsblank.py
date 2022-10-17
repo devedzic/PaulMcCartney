@@ -6,6 +6,7 @@ import string
 import settings
 
 
+#%%
 def demonstrate_formatting():
     """Demonstrating details of string formatting.
     - using classical formatting
@@ -18,10 +19,24 @@ def demonstrate_formatting():
     """
 
 
+#%%
+# Test demonstrate_formatting()
+demonstrate_formatting()
+
+#%%
+
+
 def demonstrate_fancy_formatting():
     """Using "fancy" formatting.
     - format strings like '{0}{1} {2}', '{0}{1} {2}, {3}', etc.
     """
+
+
+#%%
+# Test demonstrate_fancy_formatting()
+demonstrate_fancy_formatting()
+
+#%%
 
 
 def demonstrate_fancy_formatting_with_f_strings():
@@ -30,15 +45,19 @@ def demonstrate_fancy_formatting_with_f_strings():
     """
 
 
+#%%
+# Test demonstrate_fancy_formatting_with_f_strings()
+demonstrate_fancy_formatting_with_f_strings()
+
+#%%
+
+
 def demonstrate_string_operations():
     """Using different string operations.
     - endswith(), split(), center(), in (aka contains()), == (aka equals()), len(), ..., strip() (lstrip(), rstrip())
     """
 
 
-if __name__ == '__main__':
-
-    demonstrate_formatting()
-    demonstrate_fancy_formatting()
-    demonstrate_fancy_formatting_with_f_strings()
-    demonstrate_string_operations()
+#%%
+# Test demonstrate_string_operations()
+demonstrate_string_operations()

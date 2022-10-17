@@ -2,6 +2,7 @@
 """
 
 
+#%%
 def demonstrate_lists():
     """Using just the simplest operations with lists.
     - create a non-empty list with different kinds of elements
@@ -12,6 +13,11 @@ def demonstrate_lists():
     """
 
 
+#%%
+# Test demonstrate_lists()
+demonstrate_lists()
+
+#%%
 def demonstrate_list_methods():
     """Using
     append()
@@ -29,16 +35,37 @@ def demonstrate_list_methods():
     """
 
 
+#%%
+# Test demonstrate_list_methods()
+demonstrate_list_methods()
+
+#%%
+
+
 def demonstrate_arrays():
     """Using array.array() to build list-based numeric arrays.
     Demonstrating that lists and arrays are different types.
     """
 
 
+#%%
+# Test demonstrate_arrays()
+demonstrate_arrays()
+
+#%%
+
+
 def populate_empty_list():
     """Creating an empty list and populating it with random values
     using random.seed() and random.randint()
     """
+
+
+#%%
+# Test populate_empty_list()
+populate_empty_list()
+
+#%%
 
 
 def duplicate_list():
@@ -48,6 +75,13 @@ def duplicate_list():
     - l2 = l1 + []
     - l2 = l1[:]
     """
+
+
+#%%
+# Test duplicate_list()
+duplicate_list()
+
+#%%
 
 
 def demonstrate_list_comprehension():
@@ -60,12 +94,7 @@ def demonstrate_list_comprehension():
     # songs = ['Hey Jude', 'Eleanor Rigby', 'Let It Be', 'Penny Lane']
 
 
-if __name__ == '__main__':
-
-    demonstrate_lists()
-    demonstrate_list_methods()
-    demonstrate_arrays()
-    populate_empty_list()
-    duplicate_list()
-    demonstrate_list_comprehension()
+#%%
+# Test demonstrate_list_comprehension()
+demonstrate_list_comprehension()
 
