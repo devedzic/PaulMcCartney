@@ -4,6 +4,7 @@
 from settings import *
 
 
+#%%
 def demonstrate_arithmetic_operators():
     """Working with arithmetic operators.
     Arithmetic operators in Python are pretty much the same as in other programming languages.
@@ -13,6 +14,12 @@ def demonstrate_arithmetic_operators():
     print(23 // 5 + 13 % 7 - 2**3)
 
 
+#%%
+# Test demonstrate_arithmetic_operators()
+demonstrate_arithmetic_operators()
+
+
+#%%
 def demonstrate_relational_operators():
     """Working with relational operators.
     - simple comparisons
@@ -48,6 +55,12 @@ def demonstrate_relational_operators():
     print()
 
 
+#%%
+# Test demonstrate_relational_operators()
+demonstrate_relational_operators()
+
+
+#%%
 def demonstrate_logical_operators():
     """Working with logical operators.
     - logical operations with True, False and None
@@ -74,9 +87,7 @@ def demonstrate_logical_operators():
     # print(d1 > None)
 
 
-if __name__ == '__main__':
-
-    demonstrate_arithmetic_operators()
-    demonstrate_relational_operators()
-    demonstrate_logical_operators()
+#%%
+# Test demonstrate_logical_operators()
+demonstrate_logical_operators()
 

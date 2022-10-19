@@ -2,6 +2,7 @@
 """
 
 
+#%%
 def demonstrate_branching():
     """Details and peculiarities of if statements.
     - is compares id()'s, == compares contents
@@ -35,6 +36,12 @@ def demonstrate_branching():
         print(None)
 
 
+#%%
+# Test demonstrate_branching()
+demonstrate_branching()
+
+
+#%%
 def demonstrate_loops():
     """Different kinds of loops. Also break and continue.
     - it is not necessary to iterate through all elements of an iterable
@@ -58,7 +65,5 @@ def demonstrate_loops():
     print()
 
 
-if __name__ == '__main__':
-
-    demonstrate_branching()
-    demonstrate_loops()
+#%%
+demonstrate_loops()

@@ -1,4 +1,4 @@
-from music.musician import Musician
+from music.musician_module import Musician
 
 # Data
 

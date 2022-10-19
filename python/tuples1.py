@@ -2,6 +2,7 @@
 """
 
 
+#%%
 def demonstrate_tuples():
     """Creating and using tuples.
     - create and print empty tuple, 1-tuple, 2-tuple, mixed-type n-tuple
@@ -12,35 +13,59 @@ def demonstrate_tuples():
     empty_tuple = ()
     print(type(empty_tuple))
     print(empty_tuple)
-    one_tuple = (1, )
+    print()
+
+    one_tuple = 1,
+    print(type(one_tuple))
     print(one_tuple)
-    pair = (1, 3, )
+    print()
+
+    pair = 1, 2
+    print(type(pair))
     print(pair)
-    triplet = (1, 5, 8, )
+    print()
+
+    triplet = 1, 2, 'three',
+    print(type(triplet))
     print(triplet)
-    paul = ('Paul McCartney', 'Liverpool', 1942, True)
-    print(paul)
-    print(paul[2])
-    print()
-    for i in paul:
-        print(i)
-    # paul[2] = 'L'
     print()
 
+    print(triplet[0], triplet[2])
+    print()
 
+    for i in range(len(triplet)):
+        print(triplet[i])
+
+    # triplet[2] = 3
+
+
+#%%
+# Test demonstrate_tuples()
+demonstrate_tuples()
+
+
+#%%
 def demonstrate_packing():
     """Packing and unpacking tuples.
     """
 
     paul = 'Paul McCartney', 'Liverpool', 1942, True
+    name, city, year, valid = paul
     print(paul)
-    name, city, year, b = paul
-    print(name, city, year, b)
-    print({name, city, year, b})
-    print(type({name, city, year, b}))
+    print(name, city, year, valid)
     print()
 
+    print({name, city, year, valid})
+    print(type({name, city, year, valid}))
+    print(list(paul))
 
+
+#%%
+# Test demonstrate_packing()
+demonstrate_packing()
+
+
+#%%
 def demonstrate_zip():
     """Using the built-in zip() function with tuples and multi-counter for-loop.
     - demonstrate zip object
@@ -53,12 +78,18 @@ def demonstrate_zip():
     birth_places = ('Liverpool', 'Liverpool', 'Liverpool', 'Liverpool', )
 
     theBeatles = zip(members, birth_years, birth_places)
-    print(theBeatles)
     print(list(theBeatles))
+    print(theBeatles)
+    for member in theBeatles:
+        print(member)
     print()
 
     theBeatles = zip(members, birth_years, birth_places)
+    print(list(theBeatles))
+    theBeatles = zip(members, birth_years, birth_places)
     print(tuple(theBeatles))
+    theBeatles = zip(members, birth_years, birth_places)
+    print(set(theBeatles))
     print()
 
     theBeatles = zip(members, birth_years, birth_places)
@@ -66,8 +97,7 @@ def demonstrate_zip():
         print(f'{name} was born in {year} in {city}.')
 
 
-if __name__ == '__main__':
 
-    demonstrate_tuples()
-    demonstrate_packing()
-    demonstrate_zip()
+#%%
+# Test demonstrate_zip
+demonstrate_zip()

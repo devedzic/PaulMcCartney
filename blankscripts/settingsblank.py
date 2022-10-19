@@ -10,6 +10,8 @@ from pathlib import Path
 #
 # PROJECT_DIR = Path(__file__).parent
 # print(PROJECT_DIR)
+# DATA_DIR = PROJECT_DIR / 'data'
+# print(DATA_DIR)
 
 # # Demonstrate __file__, type(__file__), Path(__file__), Path(__file__).parent and Path.cwd()
 # print(__file__)

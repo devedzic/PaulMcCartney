@@ -6,7 +6,19 @@ user-defined decorators
 
 import functools
 
+from python.functions import *
 
+#%%
+# Setup / Data
+
+john = 'John Lennon'
+paul = 'Paul McCartney'
+george = 'George Harrison'
+ringo = 'Ringo Starr'
+the_beatles = [john, paul, george, ringo]
+
+
+#%%
 def pass_simple_function_as_parameter():
     """Demonstrates using another function as a parameter. It works because functions are objects.
     If a call to f includes positional arguments, then they are part of the *args argument of this function.
@@ -33,9 +45,13 @@ def pass_simple_function_as_parameter():
     #     g(f, *(1, 2, 3))          # result: 6
     #     g(f, *[1, 2, 3])          # result: 6
 
-    # Case 2: 1 or more arguments (the first one is positional)
+
+#%%
+# Test pass_simple_function_as_parameter()
+pass_simple_function_as_parameter()
 
 
+#%%
 def pass_function_as_parameter(f, *args, **kwargs):
     """Demonstrates using another function as a parameter. It works because functions are objects.
     The argument/parameter list specified as in this function is a fairly general one -
@@ -67,6 +83,12 @@ def pass_function_as_parameter(f, *args, **kwargs):
     """
 
 
+#%%
+# Test pass_function_as_parameter(f, *args, **kwargs)
+pass_function_as_parameter(use_all_categories_of_args, 'The Beatles', *the_beatles, start=1962, end=1970)
+
+
+#%%
 def return_function(full_name, first_name_flag):
     """Demonstrates using a function as the return value from another function.
     In this example, depending on the first_name_flag, return_function() returns one of the following functions:
@@ -75,6 +97,13 @@ def return_function(full_name, first_name_flag):
     """
 
 
+#%%
+# Test return_function(full_name, first_name_flag)
+# f = return_function('Paul McCartney', False)
+# print(f())
+
+
+#%%
 def return_function_with_args(*args):
     """Demonstrates using a function as the return value from another function.
     The returned function has parameters/arguments.
@@ -84,6 +113,14 @@ def return_function_with_args(*args):
     """
 
 
+#%%
+# Test return_function_with_args(*args)
+# f = return_function_with_args()
+# f = return_function_with_args(1)
+# print(f('Paul', 'McCartney', 1942))
+
+
+#%%
 def a_very_simple_decorator(f):
     """Illustrates the essential idea of decorators:
         - take a function (f) as a parameter of a decorator function (decorator)
@@ -132,6 +169,20 @@ def a_very_simple_decorator(f):
     # Paul McCartney
 
 
+#%%
+# Test a_very_simple_decorator(f)
+def songs(*args):
+    print(f'{", ".join([arg for arg in args])}')
+
+
+# f = a_very_simple_decorator(songs)
+# f('Yesterday', 'Let It Be', 'Cry For No One')
+# songs = a_very_simple_decorator(songs)
+# songs('Yesterday', 'Let It Be', 'Cry For No One')
+# songs()
+
+
+#%%
 def members(f_to_decorate):
     """Demonstrates how to develop a decorator.
     Uses the decorator-writing pattern (https://stackoverflow.com/a/3394911/1899061):
@@ -147,6 +198,7 @@ def members(f_to_decorate):
     """
 
 
+#%%
 @members
 def print_band(name, *members, **years_active):
     """Prints the name and the members of a band, assuming that both name and *members are strings.
@@ -154,21 +206,10 @@ def print_band(name, *members, **years_active):
     omit it if decorating manually.
     """
 
-    print(name)
 
-
-if __name__ == '__main__':
-
-    pass_simple_function_as_parameter()
-
-    # from python.functions import *
-    #
-    # john = 'John Lennon'
-    # paul = 'Paul McCartney'
-    # george = 'George Harrison'
-    # ringo = 'Ringo Starr'
-    # the_beatles = [john, paul, george, ringo]
-    #
-    # pass_function_as_parameter(use_all_categories_of_args, 'The Beatles', *the_beatles, start=1962, end=1970)
-
-
+#%%
+# Test members(f_to_decorate)
+print_band('The Beatles', *the_beatles, )
+print_band('The Beatles', start=1962, end=1970)
+print_band('The Beatles', *the_beatles, start=1962, end=1970)
+print(print_band.__name__)      # try it with and without @functools.wraps(f_to_decorate) in the decorator

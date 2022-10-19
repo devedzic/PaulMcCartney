@@ -2,6 +2,7 @@
 """
 
 
+#%%
 def demonstrate_sets():
     """Creating and using sets.
     - create a set and make an attempt to duplicate items
@@ -12,12 +13,8 @@ def demonstrate_sets():
         ^ (disjoint)
     """
 
-    print()
 
-    print()
-
-
-if __name__ == '__main__':
-
-    demonstrate_sets()
+#%%
+# Test demonstrate_sets()
+demonstrate_sets()
 

@@ -2,11 +2,16 @@
 """
 
 
+#%%
+# Setup / Data
 from util import utility
 from music.enums import Vocals, Instrument
 import json
 
+from testdata.musicians import *
 
+
+#%%
 class Musician:
     """The class describing the concept of musician.
     It is assumed that a musician is sufficiently described by their
@@ -109,6 +114,86 @@ class Musician:
         return cls(n, b)
 
 
+#%%
+# Print objects
+paul = Musician('Paul McCartney', is_band_member=False)
+print(paul)
+
+
+#%%
+# Run setters and getters in the debugger
+paul.is_band_member = True
+paul.name = 'Paul McC'
+print(paul)
+
+
+#%%
+# Compare objects
+print(paul == Musician('Paul McC'))
+
+
+#%%
+# Access data fields/attributes (instance variables),
+# including 'private' ones (<object>._Musician__n), 'protected' ones (<object>._Musician__m) and
+# immutable ones (<object>.immutable_property)
+
+# print(paul._Musician__n)
+# print(paul._m)
+# print(paul.immutable_property)
+
+
+#%%
+# Add new data fields (instance variables)
+#   1. <object>.<new_attr> = <value>
+#   2. <object>.__setattr__('<new_attr>', <value>)      # counterpart: <object>.__getattribute__('<attr>')
+#   3. setattr(<object>, '<new_attr>', <value>))        # counterpart: getattr(<object>, '<attr>')
+paul.year = 1942
+print(paul.year)
+
+
+#%%
+# Calling methods
+print(paul.play('I Saw Her Standing There', 'Thank You!',
+                rhythm_count='One, two, three, four!', love='We Love You!'))
+print(paul.play('I Saw Her Standing There', 'Thank You!',
+                love='We Love You!'))
+print(paul.play_song('I Saw Her Standing There', 'Thank You!',
+                     love='We Love You!'))
+
+
+#%%
+# Demonstrate object data fields and methods (possibly in Python console)
+# for some built-in classes (boolean, int, object,...)
+# - True + 1
+# - True.__int__()
+# - (1).__class__.__name__
+# - (1).__class__
+# - o.__dir__()
+# - o.__dir__
+# - o.__dict__
+
+print(True + 1)
+print(True.__int__())
+print((1).__class__)
+print((1).__class__.__name__)
+print((1).__dir__())
+print(object.__dict__)
+
+
+#%%
+# Demonstrate object data fields and methods for Musician objects
+print(paul.__dict__)
+print(paul.__class__)
+print(paul.__class__.__name__)
+
+
+#%%
+# Demonstrate @classmethod (from_str())
+paul_str = str(paul)
+print(paul == Musician.from_str(paul_str))
+
+
+#%%
 class MusicianEncoder(json.JSONEncoder):
     """JSON encoder for Musician objects (cls= parameter in json.dumps()).
     """
@@ -120,6 +205,7 @@ class MusicianEncoder(json.JSONEncoder):
         # can simply return musician_py_to_json(musician), to avoid code duplication
 
 
+#%%
 def musician_py_to_json(musician):
     """JSON encoder for Musician objects (default= parameter in json.dumps()).
     """
@@ -127,11 +213,13 @@ def musician_py_to_json(musician):
     # recommendation: always use double quotes with JSON
 
 
+#%%
 def musician_json_to_py(musician_json):
     """JSON decoder for Musician objects (object_hook= parameter in json.loads()).
     """
 
 
+#%%
 class Singer(Musician):
     """The class describing the concept of singer.
     It is assumed that a singer is sufficiently described as a Musician,
@@ -174,6 +262,7 @@ class Singer(Musician):
         return super().play(song_title, *args, **kwargs) + '\nYeah!'
 
 
+#%%
 class Songwriter(Musician):
     """The class describing the concept of songwriter.
     It is assumed that a songwriter is sufficiently described as a musician
@@ -210,6 +299,34 @@ class Songwriter(Musician):
         return f'I am {self.name} and I write songs.'
 
 
+#%%
+# Demonstrate inheritance
+# object class (like the Object class in Java; all classes inherit from object
+#   try, e.g., list.__mro__ in the console)
+#   object class defines object.__eq__(self, other) etc.
+#   object.__ne__(self, other), the inverse of object.__eq__(self, other),
+#   is provided by Python automatically once object.__eq__(self, other) is implemented
+
+#%%
+# Demonstrate inheritance
+# Version 1 - no multiple inheritance
+# paul = Singer('Paul McCartney', Vocals.LEAD_VOCALS)
+# print(paul)
+# print(Singer.__mro__)
+# print(paul == Singer('Paul McCartney', Vocals.LEAD_VOCALS))
+# print()
+# john = Songwriter('John Lennon', Instrument.RHYTHM_GUITAR)
+# print(john)
+# print(john == Songwriter('John Lennon', Instrument.RHYTHM_GUITAR))
+# print(john.what_do_you_do())
+
+#%%
+# Demonstrate method overriding
+print(paul.play('I Saw Her Standing There', 'Thank You!',
+                rhythm_count='One, two, three, four!', love='We Love You!'))
+
+
+#%%
 class SingerSongwriter(Singer, Songwriter):
     """The class describing the concept of singer-songwriter.
     It is assumed that a singer-songwriter is sufficiently described as a Singer who is simultaneously a Songwriter.
@@ -235,158 +352,67 @@ class SingerSongwriter(Singer, Songwriter):
         return self.__dict__ == other.__dict__ if type(self) is type(other) else False
 
 
-if __name__ == "__main__":
+#%%
+# Demonstrate multiple inheritance and MRO.
+# Make sure to read this first: https://stackoverflow.com/a/50465583/1899061 (especially Scenario 3).
+print(SingerSongwriter.__mro__)
+bob = SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
+                       instrument=Instrument.RHYTHM_GUITAR, is_band_member=False)
+print(bob)
+print()
+print(bob == SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
+                              instrument=Instrument.RHYTHM_GUITAR, is_band_member=False))
+print()
 
-    # from testdata.musicians import *
 
-    # Print objects
-    paul = Musician('Paul McCartney', is_band_member=False)
-    print(paul)
+#%%
+# Demonstrate inheritance
+# Version 2 - with multiple inheritance
+paul = Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True)
+print(paul)
+print(paul == Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True))
+print()
+john = Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True)
+print(john)
+print(john == Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True))
 
-    # Run setters and getters in the debugger
 
-    paul.is_band_member = True
-    paul.name = 'Paul McC'
-    print(paul)
-    print()
+#%%
+# Demonstrate JSON encoding/decoding of simple data types.
+# Refer to https://docs.python.org/3.3/library/json.html#encoders-and-decoders for details.
+d = json.dumps({'one': [1, True, 'Uno'], 'two': (2, 3, 4)}, indent=4)
+print(d)
+l = json.loads(d)
+print(l)
 
-    # Compare objects
-    print(paul == Musician('Paul McC'))
-    print()
+#%%
+# Demonstrate JSON encoding/decoding of Musician objects
 
-    # Access data fields/attributes (instance variables),
-    # including 'private' ones (<object>._Musician__n), 'protected' ones (<object>._Musician__m) and
-    # immutable ones (<object>.immutable_property)
-    # print(paul._Musician__n)
-    # print(paul._m)
-    # print(paul.immutable_property)
-    print()
+# Using the json_tricks module from the json-tricks external package (https://github.com/mverleg/pyjson_tricks).
+# From the package documentation:
+# The JSON string resulting from applying the json_tricks.dumps() function stores the module and class name.
+# The class must be importable from the same module when decoding (and should not have changed).
+# If it isn't, you have to manually provide a dictionary to cls_lookup_map when loading
+# in which the class name can be looked up. Note that if the class is imported, then globals() is such a dictionary
+# (so try loads(json, cls_lookup_map=glboals())).
+# Also note that if the class is defined in the 'top' script (that you're calling directly),
+# then this isn't a module and the import part cannot be extracted. Only the class name will be stored;
+# it can then only be deserialized in the same script, or if you provide cls_lookup_map.
+# That's why the following warning appears when serializing Band objects in this script:
+# UserWarning: class <class '__main__.Musician'> seems to have been defined in the main file;
+# unfortunately this means that it's module/import path is unknown,
+# so you might have to provide cls_lookup_map when decoding.
 
-    # Add new data fields (instance variables)
-    #   1. <object>.<new_attr> = <value>
-    #   2. <object>.__setattr__('<new_attr>', <value>)      # counterpart: <object>.__getattribute__('<attr>')
-    #   3. setattr(<object>, '<new_attr>', <value>))        # counterpart: getattr(<object>, '<attr>')
-    # paul.year = 1942
-    # print(paul.year)
-    print()
+#%%
+# Single object
+from json_tricks import loads, dumps
+paul_json = dumps(paul, indent=4)
+print(paul_json)
+print(paul == loads(paul_json))
 
-    # Calling methods
-    print(paul.play('I Saw Her Standing There', 'Thank You!',
-                    rhythm_count='One, two, three, four!', love='We Love You!'))
-    print(paul.play('I Saw Her Standing There', 'Thank You!',
-                    love='We Love You!'))
-    print(paul.play_song('I Saw Her Standing There', 'Thank You!',
-                    love='We Love You!'))
-    print()
-
-    # Demonstrate object data fields and methods in Python Console for some built-in classes (boolean, int, object,...)
-    # - True + 1
-    # - True.__int__()
-    # - (1).__class__.__name__
-    # - (1).__class__
-    # - o.__dir__()
-    # - o.__dir__
-    # - o.__dict__
-    #
-    # print(True + 1)
-    # print(True.__int__())
-    # print((1).__class__)
-    # print((1).__class__.__name__)
-    # print((1).__dir__())
-    # print(object.__dict__)
-    # print()
-
-    # Demonstrate object data fields and methods for Musician objects
-    print(paul.__dict__)
-    print(paul.__class__)
-    print(paul.__class__.__name__)
-    print()
-
-    # Demonstrate @classmethod (from_str())
-    paul_str = str(paul)
-    print(paul == Musician.from_str(paul_str))
-    print()
-
-    # Demonstrate inheritance
-    # object class (like the Object class in Java; all classes inherit from object
-    #   try, e.g., list.__mro__ in the console)
-    #   object class defines object.__eq__(self, other) etc.
-    #   object.__ne__(self, other), the inverse of object.__eq__(self, other),
-    #   is provided by Python automatically once object.__eq__(self, other) is implemented
-
-    # # Version 1 - no multiple inheritance
-    # paul = Singer('Paul McCartney', Vocals.LEAD_VOCALS)
-    # print(paul)
-    # print(Singer.__mro__)
-    # print(paul == Singer('Paul McCartney', Vocals.LEAD_VOCALS))
-    # print()
-    # john = Songwriter('John Lennon', Instrument.RHYTHM_GUITAR)
-    # print(john)
-    # print(john == Songwriter('John Lennon', Instrument.RHYTHM_GUITAR))
-    # print(john.what_do_you_do())
-    # print()
-
-    # Version 2 - with multiple inheritance
-    paul = Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True)
-    print(paul)
-    print(paul == Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True))
-    print()
-    john = Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True)
-    print(john)
-    print(john == Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True))
-    print()
-
-    # Demonstrate method overriding
-    print(paul.play('I Saw Her Standing There', 'Thank You!',
-                    rhythm_count='One, two, three, four!', love='We Love You!'))
-    print()
-
-    # Demonstrate multiple inheritance and MRO.
-    # Make sure to read this first: https://stackoverflow.com/a/50465583/1899061 (especially Scenario 3).
-    print(SingerSongwriter.__mro__)
-    bob = SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
-                           instrument=Instrument.RHYTHM_GUITAR, is_band_member=False)
-    print(bob)
-    print()
-    print(bob == SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
-                                  instrument=Instrument.RHYTHM_GUITAR, is_band_member=False))
-    print()
-
-    # Demonstrate JSON encoding/decoding of simple data types.
-    # Refer to https://docs.python.org/3.3/library/json.html#encoders-and-decoders for details.
-    d = json.dumps({'one': [1, True, 'Uno'], 'two': (2, 3, 4)}, indent=4)
-    print(d)
-    l = json.loads(d)
-    print(l)
-    print()
-
-    # Demonstrate JSON encoding/decoding of Musician objects
-
-    # Using the json_tricks module from the json-tricks external package (https://github.com/mverleg/pyjson_tricks).
-    # From the package documentation:
-    # The JSON string resulting from applying the json_tricks.dumps() function stores the module and class name.
-    # The class must be importable from the same module when decoding (and should not have changed).
-    # If it isn't, you have to manually provide a dictionary to cls_lookup_map when loading
-    # in which the class name can be looked up. Note that if the class is imported, then globals() is such a dictionary
-    # (so try loads(json, cls_lookup_map=glboals())).
-    # Also note that if the class is defined in the 'top' script (that you're calling directly),
-    # then this isn't a module and the import part cannot be extracted. Only the class name will be stored;
-    # it can then only be deserialized in the same script, or if you provide cls_lookup_map.
-    # That's why the following warning appears when serializing Band objects in this script:
-    # UserWarning: class <class '__main__.Musician'> seems to have been defined in the main file;
-    # unfortunately this means that it's module/import path is unknown,
-    # so you might have to provide cls_lookup_map when decoding.
-
-    # Single object
-    from json_tricks import loads, dumps
-    paul_json = dumps(paul, indent=4)
-    print(paul_json)
-    print(paul == loads(paul_json))
-    print()
-
-    # List of objects
-    john_and_paul_json = dumps([john, paul], indent=4)
-    print(john_and_paul_json)
-    print([john, paul] == loads(john_and_paul_json))
-    print()
+#%%
+# List of objects
+john_and_paul_json = dumps([john, paul], indent=4)
+print(john_and_paul_json)
+print([john, paul] == loads(john_and_paul_json))
 

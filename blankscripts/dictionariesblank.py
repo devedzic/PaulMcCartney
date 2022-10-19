@@ -13,6 +13,7 @@ Read more at https://qr.ae/TWCAvj.
 """
 
 
+#%%
 def demonstrate_dictionaries():
     """Creating and using dictionaries.
     - create a blank (empty) dictionary
@@ -28,6 +29,12 @@ def demonstrate_dictionaries():
     """
 
 
+#%%
+# Test demonstrate_dictionaries()
+demonstrate_dictionaries()
+
+
+#%%
 def sort_dictionary(d, by):
     """Sorting a dictionary by keys or by values.
     - using zip()
@@ -36,11 +43,17 @@ def sort_dictionary(d, by):
     """
 
 
+#%%
 def demonstrate_dict_sorting():
     """Demonstrate sorting a dictionary.
     """
 
+    from pprint import pprint
 
-if __name__ == '__main__':
-    demonstrate_dictionaries()
-    demonstrate_dict_sorting()
+    songs = {2: 'The Long and Winding Road', 1: 'Oh, Darling', 3: 'Can\'t Buy Me Love'}
+    paul = {'name': 'Paul McCartney', 'city': 'Liverpool', 'year': 1942}
+
+
+#%%
+# Test demonstrate_dict_sorting()
+demonstrate_dict_sorting()
