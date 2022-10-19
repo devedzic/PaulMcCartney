@@ -369,4 +369,3 @@ for band in bands1:
     print(band)
 
 
-

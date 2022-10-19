@@ -70,3 +70,4 @@ def use_all_categories_of_args(band, *members, is_active=True, **details):
 use_all_categories_of_args('The Beatles', is_active=False, start=1962, end=1970)
 use_all_categories_of_args('The Beatles', *the_beatles, is_active=False, start=1962, end=1970)
 
+

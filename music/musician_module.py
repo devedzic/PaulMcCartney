@@ -104,3 +104,4 @@ class Musician:
         b = musician_string.split('(')[1].startswith('b')
         return cls(n, b)
 
+

@@ -17,6 +17,3 @@ DATA_DIR = PROJECT_DIR / 'data'
 # print(Path(__file__))
 # print(Path(__file__).parent)
 
-
-
-

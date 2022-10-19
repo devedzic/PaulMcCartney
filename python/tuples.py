@@ -2,6 +2,7 @@
 """
 
 
+#%%
 def demonstrate_tuples():
     """Creating and using tuples.
     - create and print empty tuple, 1-tuple, 2-tuple, mixed-type n-tuple
@@ -28,6 +29,12 @@ def demonstrate_tuples():
     print()
 
 
+#%%
+# Test demonstrate_tuples()
+demonstrate_tuples()
+
+
+#%%
 def demonstrate_packing():
     """Packing and unpacking tuples.
     """
@@ -41,6 +48,12 @@ def demonstrate_packing():
     print()
 
 
+#%%
+# Test demonstrate_packing()
+demonstrate_packing()
+
+
+#%%
 def demonstrate_zip():
     """Using the built-in zip() function with tuples and multi-counter for-loop.
     - demonstrate zip object
@@ -66,8 +79,7 @@ def demonstrate_zip():
         print(f'{name} was born in {year} in {city}.')
 
 
-if __name__ == '__main__':
+#%%
+# Test demonstrate_zip()
+demonstrate_zip()
 
-    demonstrate_tuples()
-    demonstrate_packing()
-    demonstrate_zip()

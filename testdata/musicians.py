@@ -26,3 +26,4 @@ nickCave = Musician('Nick Cave', is_band_member=False)
 bobDylan = Musician('Bob Dylan', is_band_member=False)
 taylorSwift = Musician('Taylor Swift', is_band_member=False)
 elliottSmith = Musician('Elliott Smith', is_band_member=False)
+
