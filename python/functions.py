@@ -68,7 +68,7 @@ def use_flexible_arg_list(band: str, *members):
     # s = f'{band}: {members}' if members else f'{band}'
     # print(s)
     # print()
-    print(f'{band}: ' + ', '.join([members[i] for i in range(len(members))]))
+    print(f'{band}:', ', '.join([member for member in members]))
 
 
 #%%
@@ -83,13 +83,12 @@ def use_all_categories_of_args(band, *members, is_active=True, **details):
     - print all arguments/parameters, including the keyword arguments/parameters, in one line
     """
 
-    b = f'{band}:' if band else 'Unknown band:'
-    m = ', '.join([members[i] for i in range(len(members))]) if len(members) else 'members unknown'
-    m += ';'
+    b = str(band) + ':' if members else str(band) + ';'
+    m = ', '.join([member for member in members]) + ';' if members else ''
     a = 'active' if is_active else 'not active'
-    a += ';'
-    d = ', '.join([str(k) + ': ' + str(v) for k, v in details.items()])
-    print(b, m, a, d)
+    d = f'({", ".join([str(k) + ": " + str(v) for k, v in details.items()])})' if details else ''
+
+    print(b, m, a, d) if members else print(b, a, d)
 
 
 #%%
