@@ -6,6 +6,9 @@ File I/O and JSON encoding/decoding of Band objects are demonstrated too.
 """
 
 
+#%%
+# Setup / Data
+
 import pickle
 from datetime import date, datetime, time
 import json

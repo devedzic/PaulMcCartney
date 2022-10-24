@@ -4,7 +4,7 @@
 
 #%%
 # Setup / Data
-from enum import Enum
+
 from datetime import date
 from pathlib import Path
 

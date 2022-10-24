@@ -1,8 +1,13 @@
 """Utility functions of the package music.
 """
 
-from enum import Enum
+#%%
+# Setup / Data
+
 from datetime import date
+from pathlib import Path
+
+from settings import *
 
 
 #%%
@@ -14,6 +19,7 @@ def format_date(a_date):
 
 
 #%%
+# Test format_date(a_date)
 
 #%%
 def date_py_to_json(a_date):
