@@ -342,4 +342,3 @@ from json_tricks import loads, dumps
 # List of objects
 from json_tricks import loads, dumps
 
-

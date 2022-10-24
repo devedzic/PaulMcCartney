@@ -102,4 +102,3 @@ def get_data_dir():
 # Demonstrate get_data_dir()
 print(get_data_dir())
 print(type(get_data_dir()))
-

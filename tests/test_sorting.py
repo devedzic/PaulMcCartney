@@ -50,4 +50,3 @@ and what they told me was that my framework was perfect. If I remember correctly
 they said it was like releasing a tiger into the world.
 """)
 token_frequency(gpt3_response)
-

@@ -204,5 +204,3 @@ class BandNameError(BandError):
 # Demonstrate reading from a binary file - pickle.load(<infile>)
 
 
-
-

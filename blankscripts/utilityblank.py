@@ -1,6 +1,7 @@
 """Utility functions of the package music.
 """
 
+
 #%%
 # Setup / Data
 
