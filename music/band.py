@@ -54,6 +54,8 @@ class Band():
         # Musician objects are unhashable, so comparing the members tuples from self and other directly does not work;
         # see https://stackoverflow.com/a/14721133/1899061, https://stackoverflow.com/a/17236824/1899061
         # return self == other if isinstance(other, Band) else False    # No! Musician objects are unhashable!
+        # However, this works:
+        # return self.__dict__ == other.__dict__ if isinstance(other, Band) else False
 
         t = isinstance(other, Band)
         n = self.name == other.name

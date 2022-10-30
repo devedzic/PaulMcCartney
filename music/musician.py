@@ -261,6 +261,12 @@ class Singer(Musician):
 
         return super().play(song_title, *args, **kwargs) + '\nYeah!'
 
+    def what_do_you_do(self):
+        """Just a simple method to describe the concept of singer.
+        """
+
+        return f'I am {self.name} and I sing songs.'
+
 
 #%%
 class Songwriter(Musician):
@@ -351,6 +357,15 @@ class SingerSongwriter(Singer, Songwriter):
 
         return self.__dict__ == other.__dict__ if type(self) is type(other) else False
 
+    def tell(self):
+        """What if multiple inheritance requires calling a method with same method name
+        from different paths (i.e., from different base classes)?
+        E.g., class C(A, B) and both A and B implement a method with the same name m() in their own ways).
+        In that case, call A's version like A.m(self), and B's version like B.m(self).
+        """
+        print(Singer.what_do_you_do(self))
+        print(Songwriter.what_do_you_do(self))
+
 
 #%%
 # Demonstrate multiple inheritance and MRO.
@@ -364,6 +379,7 @@ print(bob == SingerSongwriter(name='Bob Dylan', vocals=Vocals.LEAD_VOCALS,
                               instrument=Instrument.RHYTHM_GUITAR, is_band_member=False))
 print()
 
+bob.tell()
 
 #%%
 # Demonstrate inheritance
@@ -372,10 +388,10 @@ paul = Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=T
 print(paul)
 print(paul == Singer(name='Paul McCartney', vocals=Vocals.LEAD_VOCALS, is_band_member=True))
 print()
-john = Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True)
-print(john)
-print(john == Songwriter(name='John Lennon', instrument=Instrument.RHYTHM_GUITAR, is_band_member=True))
-
+# paul = Songwriter('Paul McCartney', Instrument.BASS)
+# print(paul)
+# print(paul == Songwriter('Paul McCartney', Instrument.BASS))
+# print(paul.what_do_you_do())
 
 #%%
 # Demonstrate JSON encoding/decoding of simple data types.
