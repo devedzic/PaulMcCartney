@@ -32,7 +32,7 @@ class Band():
     def __init__(self, name, *members, start=date.today(), end=date.today()):
         # pass                                            # introduce and initialize iterator counter, self.__i
 
-        # Code to check if the band name is specified correctly (possibly rises BandNameError)
+        # Code to check if the band name is specified correctly (possibly raises BandNameError)
         check_name = not isinstance(name, str) or len(name) == 0
         if check_name:
             raise BandNameError(name)
