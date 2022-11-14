@@ -33,7 +33,7 @@ class Band():
         # pass                                            # introduce and initialize iterator counter, self.__i
 
         # Code to check if the band name is specified correctly (possibly raises BandNameError)
-        check_name = not isinstance(name, str) or len(name) == 0
+        check_name = not isinstance(name, str) or not len(name)
         if check_name:
             raise BandNameError(name)
 
@@ -262,8 +262,9 @@ class BandNameError(BandError):
     """
 
     def __init__(self, name):
+        Exception.__init__(self, f'BandNameError: \'{name}\' is not a valid band name')
         self.name = name
-        self.message = f'BandNameError: \'{self.name}\' is not a valid band name'
+        # self.message = f'BandNameError: \'{self.name}\' is not a valid band name'
 
 
 #%%
@@ -323,10 +324,16 @@ except Exception as err:
     print()
     #     sys.stderr.write(f'\n{type(err).__name__}: {err.args[0]}\n\n')
     # sys.stderr.write(f'\n{type(err).__name__}:\n{err.message}\n\n')
-    sys.stderr.write(f'\n{err.message}\n\n')
+    # sys.stderr.write(f'\n{err.message}\n\n')
+    sys.stderr.write(f'\n{err.args[0]}\n\n')
 
 #%%
 # Demonstrate working with files
+theBeatles = Band('The Beatles', *[johnLennon, paulMcCartney, georgeHarrison, ringoStarr],
+                  start=date(1957, 7, 6), end=date(1970, 4, 10))
+theRollingStones = Band('The Rolling Stones', *[mickJagger, keithRichards, ronWood, charlieWatts],
+                        start=date(1962, 7, 12))
+pinkFloyd = Band('Pink Floyd', *[sydBarrett, davidGilmour, rogerWaters, nickMason, rickWright])
 
 #%%
 # Writing to a text file - <outfile>.write(str(<obj>), <outfile>.writelines([str(<obj>)+'\n' for <obj> in <objs>])
@@ -339,7 +346,7 @@ with open(file, 'w') as f:
 print('Done')
 
 #%%
-# Demonstrate reading from a text file - <infile>.read(), <infile>.readline()
+# Demonstrate reading from a text file - <infile>.readline(), <infile>.readlines()
 file = get_data_dir() / 'bands.txt'
 with open(file, 'r') as f:
     # lines = f.read().rstrip()             # rstrip() removes an extra '\n' in the end
