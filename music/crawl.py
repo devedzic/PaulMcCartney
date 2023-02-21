@@ -120,6 +120,9 @@ from selenium import webdriver
 # Before running the following line, make sure to download and unzip chromedriver and put chromedriver.exe
 # in the Scripts subfolder of your Python installation folder,
 # e.g. C:\Users\Vladan\AppData\Local\Programs\Python\Python310\Scripts.
+# To find the Python installation folder from a Python script or notebook, just run:
+#   import sys
+#   sys.executable
 # The driver should be downloaded from https://chromedriver.chromium.org/downloads.
 # Then you need not provide the path of the driver, just run: driver = webdriver.Chrome().
 # (Adapted from https://stackoverflow.com/a/60062969/1899061.)
