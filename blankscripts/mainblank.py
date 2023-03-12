@@ -36,3 +36,7 @@
 # Global variables: __name__, __file__, __doc__,...
 
 
+
+#%%
+# Importing from another script
+

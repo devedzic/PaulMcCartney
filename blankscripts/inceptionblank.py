@@ -23,6 +23,10 @@
 
 
 #%%
+# A simple function and function call
+
+
+#%%
 # Printing docstrings
 
 
